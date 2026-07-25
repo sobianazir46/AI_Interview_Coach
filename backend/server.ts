@@ -382,6 +382,27 @@ app.delete("/api/history", (req, res) => {
 });
 
 // Vite Middleware & Static Server integration
+// async function startServer() {
+//   if (process.env.NODE_ENV !== "production") {
+//     const vite = await createViteServer({
+//       root: FRONTEND_DIR,
+//       server: { middlewareMode: true },
+//       appType: "spa",
+//     });
+//     app.use(vite.middlewares);
+//   } else {
+//     const distPath = path.join(FRONTEND_DIR, "dist");
+//     app.use(express.static(distPath));
+//     app.get("*", (req, res) => {
+//       res.sendFile(path.join(distPath, "index.html"));
+//     });
+//   }
+
+//   app.listen(PORT, "0.0.0.0", () => {
+//     console.log(`Server running on http://0.0.0.0:${PORT}`);
+//   });
+// }
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -390,13 +411,8 @@ async function startServer() {
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(FRONTEND_DIR, "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
   }
+  // production: no static file serving — frontend lives on Vercel
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://0.0.0.0:${PORT}`);
