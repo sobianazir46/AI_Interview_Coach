@@ -66,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <History className="w-4 h-4" />
-            <span>History</span>
+            <span className="hidden sm:inline">History</span>
             {historyCount > 0 && (
               <span className="bg-indigo-500 text-white text-[11px] font-bold px-1.5 py-0.2 rounded-full min-w-[18px] text-center">
                 {historyCount}
