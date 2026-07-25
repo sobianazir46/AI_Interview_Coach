@@ -27,6 +27,11 @@ app.use(cors({
 // Body parser with 10MB limit for resume uploads
 app.use(express.json({ limit: "10mb" }));
 
+// Health check endpoint (for Render/uptime monitoring)
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // File persistence directory for sessions
 const DATA_DIR = path.join(__dirname, "data");
 const FRONTEND_DIR = path.join(__dirname, "../frontend");
