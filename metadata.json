@@ -1,0 +1,6 @@
+{
+  "name": "AI Interview Coach",
+  "description": "Personalized job interview prep tool that generates role-tailored questions from resumes, scores answers with constructive AI feedback, and tracks session history.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
