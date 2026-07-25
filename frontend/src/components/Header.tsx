@@ -17,33 +17,33 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-slate-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo */}
         <div
           onClick={() => setView("setup")}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer group w-full sm:w-auto"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-            <Award className="w-5 h-5" />
+          <div className="w-9 sm:w-10 h-9 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+            <Award className="w-4 sm:w-5 h-4 sm:h-5" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-lg tracking-tight text-white group-hover:text-blue-400 transition-colors">
-                AI Interview Coach
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+              <span className="font-bold text-sm sm:text-lg tracking-tight text-white group-hover:text-blue-400 transition-colors truncate">
+                AI Coach
               </span>
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full">
-                <Sparkles className="w-2.5 h-2.5 text-blue-400" />
-                Gemini
+              <span className="hidden xs:inline-flex items-center gap-0.5 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 px-1 sm:px-2 py-0.5 rounded-full flex-shrink-0">
+                <Sparkles className="w-2 sm:w-2.5 h-2 sm:h-2.5" />
+                <span className="hidden sm:inline">Gemini</span>
               </span>
             </div>
-            <p className="text-xs text-slate-400 hidden sm:block">
-              Personalized mock interviews & AI scoring
+            <p className="text-[10px] sm:text-xs text-slate-400 hidden sm:block line-clamp-1">
+              Personalized mock interviews
             </p>
           </div>
         </div>
 
         {/* Navigation Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 w-full sm:w-auto overflow-x-auto pb-0.5 sm:pb-0">
           <button
             onClick={() => setView("setup")}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${

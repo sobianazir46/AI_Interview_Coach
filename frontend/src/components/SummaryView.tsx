@@ -83,21 +83,22 @@ export const SummaryView: React.FC<SummaryViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 space-y-8">
+    <div className="w-full min-h-screen py-4 sm:py-8 px-3 sm:px-6">
+      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-8">
       {/* Hero Header Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl p-6 sm:p-8 text-center space-y-6">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 mb-1">
-          <Award className="w-10 h-10" />
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl p-4 sm:p-8 text-center space-y-3 sm:space-y-6">
+        <div className="inline-flex items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 mx-auto mb-0 sm:mb-1">
+          <Award className="w-8 sm:w-10 h-8 sm:h-10" />
         </div>
 
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
-            Interview Session Complete
+          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-200 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full inline-flex">
+            Interview Complete
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2 sm:mt-3">
             {session.role}
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-[10px] sm:text-xs text-slate-500 mt-1">
             Completed on {new Date(session.timestamp).toLocaleDateString()} at{" "}
             {new Date(session.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
           </p>
@@ -307,6 +308,7 @@ export const SummaryView: React.FC<SummaryViewProps> = ({
           <RotateCcw className="w-4 h-4" />
           <span>Start Another Interview</span>
         </button>
+      </div>
       </div>
     </div>
   );

@@ -43,22 +43,23 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 space-y-6">
+    <div className="w-full min-h-screen py-4 sm:py-8 px-3 sm:px-6">
+      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5">
-        <div>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 pb-3 sm:pb-5">
+        <div className="w-full">
           <div className="flex items-center gap-2">
-            <HistoryIcon className="w-6 h-6 text-blue-600" />
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Interview Session History
+            <HistoryIcon className="w-5 sm:w-6 h-5 sm:h-6 text-blue-600 flex-shrink-0" />
+            <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              History
             </h1>
           </div>
-          <p className="text-sm text-slate-600 mt-1">
-            Review past mock interviews, questions, scores, and Gemini AI feedback.
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            Review past interviews & feedback.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">"
           {history.length > 0 && (
             <button
               type="button"
@@ -178,6 +179,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 };

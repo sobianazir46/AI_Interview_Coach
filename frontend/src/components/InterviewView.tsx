@@ -179,24 +179,25 @@ export const InterviewView: React.FC<InterviewViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 space-y-6">
+    <div className="w-full min-h-screen py-4 sm:py-8 px-3 sm:px-6">
+      <div className="max-w-4xl mx-auto space-y-3 sm:space-y-6">
       {/* Header bar: Progress & Role */}
-      <div className="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 shadow-lg border border-slate-800">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">
-              Mock Interview Session
+      <div className="bg-slate-900 text-white rounded-2xl p-3 sm:p-6 shadow-lg border border-slate-800">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="w-full sm:w-auto">
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
+              Mock Interview
             </span>
-            <h2 className="text-xl font-bold text-white">{role}</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white truncate">{role}</h2>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
-              <Clock className="w-3.5 h-3.5 text-blue-400" />
-              <span>Time: {formatTimer(elapsedSeconds)}</span>
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto flex-wrap">
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-slate-300 bg-slate-800/80 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-slate-700 flex-shrink-0">
+              <Clock className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-blue-400" />
+              <span>{formatTimer(elapsedSeconds)}</span>
             </div>
-            <span className="text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-full">
-              Question {currentStep + 1} of {questions.length}
+            <span className="text-[10px] sm:text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full flex-shrink-0">
+              Q{currentStep + 1}/{questions.length}
             </span>
           </div>
         </div>
@@ -468,6 +469,7 @@ export const InterviewView: React.FC<InterviewViewProps> = ({
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

@@ -106,23 +106,24 @@ export const SetupView: React.FC<SetupViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6">
+    <div className="w-full min-h-screen py-4 sm:py-8 px-3 sm:px-6">
+      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-8">
       {/* Intro Banner */}
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
-          AI-Powered Mock Interview Generator
+      <div className="text-center mb-6 sm:mb-10">
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
+          <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+          AI-Powered Interview
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2 sm:mb-3">
           Prepare for Your Dream Role
         </h1>
-        <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-          Upload your resume and specify your target role. Gemini will extract key experience, tailor 5 targeted interview questions, and score your answers with constructive feedback.
+        <p className="text-sm sm:text-lg text-slate-600 max-w-2xl mx-auto px-2">
+          Upload your resume and target role. Get AI-tailored questions & instant feedback.
         </p>
       </div>
 
       {/* Main Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/50 p-6 sm:p-8 space-y-8">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/50 p-4 sm:p-8 space-y-4 sm:space-y-8">
         {/* Error Banner */}
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-start gap-3 animate-fade-in">
@@ -349,6 +350,7 @@ export const SetupView: React.FC<SetupViewProps> = ({
             )}
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
