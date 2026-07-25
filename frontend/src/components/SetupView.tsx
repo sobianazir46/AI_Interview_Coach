@@ -62,7 +62,8 @@ export const SetupView: React.FC<SetupViewProps> = ({
       reader.onload = async (e) => {
         try {
           const base64 = e.target?.result as string;
-          const res = await fetch("/api/parse-pdf", {
+          const apiUrl = import.meta.env.VITE_API_URL || "";
+          const res = await fetch(`${apiUrl}/api/parse-pdf`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ pdfBase64: base64 }),

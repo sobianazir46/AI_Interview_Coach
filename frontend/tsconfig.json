@@ -15,8 +15,8 @@
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
+    "types": ["vite/client"],
     "paths": {
       "@/*": [
         "./src/*"

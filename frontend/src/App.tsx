@@ -35,7 +35,8 @@ export default function App() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch("/api/history");
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/history`);
       if (res.ok) {
         const data = await res.json();
         setHistory(data || []);
@@ -51,7 +52,8 @@ export default function App() {
     setError("");
 
     try {
-      const res = await fetch("/api/generate-questions", {
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/generate-questions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -89,7 +91,8 @@ export default function App() {
     const currentQ = questions[currentStep];
 
     try {
-      const res = await fetch("/api/score-answer", {
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/score-answer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -133,10 +136,10 @@ export default function App() {
   // 3. Proceed to Next Question or Finish Session
   const handleProceedNext = async () => {
     if (currentStep < questions.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+      setCurrentStep((prev: number) => prev + 1);
     } else {
       // Completed all 5 questions! Calculate final average score and save
-      const totalScore = results.reduce((acc, curr) => acc + (curr ? curr.score : 0), 0);
+      const totalScore = results.reduce((acc: number, curr: EvaluationResult | null) => acc + (curr ? curr.score : 0), 0);
       const avgScore = Number((totalScore / questions.length).toFixed(1));
 
       const newSessionPayload = {
@@ -147,7 +150,8 @@ export default function App() {
       };
 
       try {
-        const res = await fetch("/api/save-session", {
+        const apiUrl = import.meta.env.VITE_API_URL || "";
+        const res = await fetch(`${apiUrl}/api/save-session`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newSessionPayload),
@@ -195,7 +199,8 @@ export default function App() {
   // Delete session from history
   const handleDeleteSession = async (id: string) => {
     try {
-      const res = await fetch(`/api/history/${id}`, { method: "DELETE" });
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/history/${id}`, { method: "DELETE" });
       if (res.ok) {
         fetchHistory();
       }
@@ -207,7 +212,8 @@ export default function App() {
   // Clear all history
   const handleClearHistory = async () => {
     try {
-      const res = await fetch("/api/history", { method: "DELETE" });
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/history`, { method: "DELETE" });
       if (res.ok) {
         setHistory([]);
       }

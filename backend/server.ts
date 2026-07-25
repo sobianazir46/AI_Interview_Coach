@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -12,7 +13,16 @@ const pdfParseModule = require("pdf-parse");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || "3000", 10);
+const NODE_ENV = process.env.NODE_ENV || "development";
+
+// CORS configuration - allow requests from Vercel frontend
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "*",
+  credentials: true,
+  methods: ["GET", "POST", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 // Body parser with 10MB limit for resume uploads
 app.use(express.json({ limit: "10mb" }));
