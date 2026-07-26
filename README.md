@@ -75,6 +75,10 @@ Job interviews are high-stress situations where candidates often underperform du
 ![Screenshot 5](./screenshots/5.png)
 ![Screenshot 6](./screenshots/6.png)
 ![Screenshot 7](./screenshots/7.png)
+![Screenshot 8](./screenshots/8.png)
+![Screenshot 9](./screenshots/9.png)
+![Screenshot 10](./screenshots/10.png)
+![Screenshot 11](./screenshots/11.png)
 
 ---
 
