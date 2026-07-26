@@ -2,389 +2,329 @@
 
 <div align="center">
 <img width="1200" height="475" alt="AI Interview Coach Banner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+
+**Personalized, AI-driven interview preparation — powered by Google Gemini**
+
+[![Live App](https://img.shields.io/badge/Live-Frontend-blue?style=flat-square)](https://ai-interview-coach-six-opal.vercel.app/)
+[![API](https://img.shields.io/badge/Live-Backend%20API-green?style=flat-square)](https://ai-interview-coach-backend-nfu8.onrender.com)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)]()
+
+[Live Demo](https://ai-interview-coach-six-opal.vercel.app/) · [Backend API](https://ai-interview-coach-backend-nfu8.onrender.com) · [Report an Issue](../../issues)
+
 </div>
-
-> **Personalized job interview prep powered by Google Gemini AI**
->
-> Generate role-tailored interview questions from your resume, get instant AI-driven feedback on your answers, and track your interview performance over time.
-
-## 🎯 Overview
-
-**AI Interview Coach** is a full-stack web application that helps candidates prepare for job interviews using advanced AI. The system analyzes your resume and job role, generates targeted interview questions, scores your answers with constructive feedback, and maintains a history of all your practice sessions.
-
-### Key Features
-
-- 📄 **Smart Resume Parsing**: Upload and parse PDF resumes to extract relevant experience
-- 🤖 **AI-Powered Question Generation**: Gemini generates role-specific behavioral and technical questions
-- 🎤 **Real-time Answer Evaluation**: Get instant scores (1-10) and detailed feedback on your responses
-- 💡 **Actionable Insights**: Receive strengths, improvement areas, and sample answers for every question
-- 📊 **Session History**: Track all practice sessions with performance metrics and timestamps
-- 🎨 **Modern UI**: Responsive, intuitive interface built with React and Tailwind CSS
 
 ---
 
-## 🏗️ Architecture
+## Overview
+
+**AI Interview Coach** is a full-stack web application that helps candidates prepare for job interviews using generative AI. Users upload their resume and specify a target role; the system generates tailored interview questions, evaluates spoken or written answers in real time, and tracks performance across sessions.
+
+The application was originally prototyped in **Google AI Studio** and has since been substantially re-engineered for production use: the codebase was restructured into an independent, deployable frontend/backend architecture, the UI was rebuilt to be fully mobile-responsive, and the application was deployed to a live, publicly accessible environment with automated uptime management.
+
+### Live Deployment
+
+| Service | Platform | URL |
+|---|---|---|
+| Frontend (React SPA) | Vercel | https://ai-interview-coach-six-opal.vercel.app/ |
+| Backend (REST API) | Render | https://ai-interview-coach-backend-nfu8.onrender.com |
+
+> **Note:** The backend runs on Render's free tier, which suspends inactive services. A scheduled [cron-job.org](https://cron-job.org) health-check ping keeps the API warm and minimizes cold-start latency for end users.
+
+---
+
+## Key Features
+
+- **Resume-Aware Question Generation** — Parses uploaded PDF resumes and generates role-specific behavioral and technical interview questions using the Gemini API.
+- **Real-Time Answer Evaluation** — Each response is scored (1–10) with structured, constructive feedback, including strengths, areas for improvement, and a model sample answer.
+- **Session History & Analytics** — All practice sessions are persisted and browsable, with average scores and timestamps for tracking progress over time.
+- **Interview Preparation Guidance** — An in-app tips modal offers best practices for interview readiness.
+- **Fully Responsive Interface** — Rebuilt from the original AI Studio prototype to work seamlessly across desktop, tablet, and mobile viewports.
+- **Independent, Production-Ready Deployment** — Frontend and backend are decoupled, containerizable, and independently deployable services.
+
+---
+
+## Project Background
+
+This project began as a prototype built in Google AI Studio. Since then, the following engineering work has been completed independently:
+
+- **Restructured the codebase** from a single AI Studio export into a clean, separated `frontend/` and `backend/` project layout suitable for independent deployment and version control.
+- **Rebuilt the UI for full mobile responsiveness**, ensuring usability across all screen sizes rather than the desktop-first prototype layout.
+- **Decoupled the frontend and backend into independently deployable services**, rather than a single bundled server.
+- **Deployed to production**: frontend on **Vercel**, backend on **Render**.
+- **Configured a scheduled uptime ping via cron-job.org** to mitigate free-tier backend cold starts.
+- **Hardened CORS, environment configuration, and API error handling** for a live, public-facing deployment.
+
+---
+
+## Architecture
 
 ### Tech Stack
 
-**Frontend:**
-- React 19 (UI framework)
-- TypeScript (type safety)
-- Vite (build tool & dev server)
-- Tailwind CSS (styling)
-- Lucide React (icons)
+**Frontend**
+- React 19 + TypeScript
+- Vite (build tooling & dev server)
+- Tailwind CSS (responsive styling)
+- Lucide React (icon system)
 - Motion (animations)
 
-**Backend:**
-- Express.js (REST API server)
-- Node.js ES Modules (server runtime)
-- Google Gemini AI API (question generation & scoring)
-- PDF Processing: unpdf, pdf-parse, pdf2json, pdf-lib (resume extraction)
+**Backend**
+- Node.js (ES Modules) + Express.js
+- Google Gemini API (question generation & answer scoring)
+- PDF text extraction: `unpdf`, `pdf-parse` (with OCR fallback via Gemini for scanned documents)
+- JSON file-based session persistence
 
-**Infrastructure:**
-- npm workspaces (monorepo structure)
-- File-based persistence (JSON storage for sessions)
-- Environment variables (.env.local configuration)
+**Infrastructure & DevOps**
+- Vercel (frontend hosting & CI/CD)
+- Render (backend hosting)
+- cron-job.org (scheduled backend keep-alive)
+- Git-based deployment pipelines on both platforms
 
 ### Project Structure
 
 ```
 ai-interview-coach/
-├── frontend/                    # React SPA
+├── frontend/                     # React SPA (deployed to Vercel)
 │   ├── src/
-│   │   ├── components/         # React UI components
+│   │   ├── components/
 │   │   │   ├── Header.tsx
-│   │   │   ├── SetupView.tsx    # Interview setup & resume upload
-│   │   │   ├── InterviewView.tsx # Interview Q&A interface
-│   │   │   ├── SummaryView.tsx  # Results & performance summary
-│   │   │   ├── HistoryView.tsx  # Past session history
-│   │   │   └── PrepTipsModal.tsx # Interview prep tips
-│   │   ├── App.tsx              # Main application state & logic
-│   │   ├── types.ts             # TypeScript interfaces
-│   │   ├── index.css            # Global styles
-│   │   └── main.tsx             # Entry point
+│   │   │   ├── SetupView.tsx         # Role input & resume upload
+│   │   │   ├── InterviewView.tsx     # Live Q&A interface
+│   │   │   ├── SummaryView.tsx       # Results & performance summary
+│   │   │   ├── HistoryView.tsx       # Past session browser
+│   │   │   └── PrepTipsModal.tsx     # Interview prep guidance
+│   │   ├── App.tsx                   # Application state & routing logic
+│   │   ├── types.ts                  # Shared TypeScript interfaces
+│   │   └── main.tsx                  # Entry point
 │   ├── package.json
-│   ├── tsconfig.json
 │   ├── vite.config.ts
 │   └── index.html
 │
-├── backend/                     # Express REST API
-│   ├── server.ts                # API endpoints & business logic
+├── backend/                      # Express REST API (deployed to Render)
+│   ├── server.ts                     # API routes & business logic
 │   ├── data/
-│   │   └── history.json         # Session persistence store
-│   ├── package.json
-│   └── dist/                    # Production bundle (generated)
+│   │   └── history.json              # Session persistence store
+│   └── package.json
 │
-├── package.json                 # Workspace root manifest
-├── .env.example                 # Environment variables template
-├── .gitignore                   # Git ignore patterns
-└── README.md                    # This file
+├── .env.example                  # Environment variable template
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 🔄 Data Flow & Pipelines
-
-### Interview Session Flow
+## Application Flow
 
 ```
-1. Setup Phase
-   ├── User enters job role (e.g., "Senior React Engineer")
-   ├── User uploads resume (PDF)
-   └── Resume parsed for context
+1. Setup
+   User specifies a target role and uploads a resume (PDF)
         ↓
 2. Question Generation
-   ├── Frontend sends role + resume to /api/generate-questions
-   ├── Backend calls Gemini API with structured prompt
-   └── Returns 5 tailored questions (behavioral + technical)
+   Backend sends role + parsed resume text to Gemini
+   → Returns 5 tailored behavioral & technical questions
         ↓
-3. Interview Phase
-   ├── User answers question 1-5
-   ├── Frontend sends each answer to /api/score-answer
-   ├── Backend evaluates with Gemini (score 1-10 + feedback)
-   └── Results displayed with strengths, improvements, sample answers
+3. Interview
+   User answers each question in turn
+   Each answer is scored and critiqued in real time via Gemini
         ↓
-4. Summary Phase
-   ├── Calculate average score across all questions
-   ├── Display performance metrics & feedback summary
-   ├── Frontend sends session data to /api/save-session
-   └── Session persisted to backend/data/history.json
+4. Summary
+   Aggregate score and feedback are computed and displayed
+   Session is persisted to backend storage
         ↓
-5. History View
-   ├── User can browse all past sessions
-   ├── View detailed results from previous interviews
-   └── Delete sessions as needed
-```
-
-### API Endpoints
-
-| Endpoint | Method | Purpose | Payload |
-|----------|--------|---------|---------|
-| `/api/generate-questions` | POST | Generate interview questions | `{ role, resume }` |
-| `/api/score-answer` | POST | Evaluate user answer | `{ question, type, answer, role }` |
-| `/api/save-session` | POST | Save interview session | `{ role, resumeSnippet, avgScore, results }` |
-| `/api/history` | GET | Fetch all sessions | - |
-| `/api/history/:id` | DELETE | Remove a session | - |
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** 16+ ([download](https://nodejs.org/))
-- **npm** 8+ (comes with Node.js)
-- **Google Gemini API Key** ([get key](https://ai.google.dev/))
-
-### Installation & Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd ai-interview-coach
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-   This installs dependencies for both frontend and backend via npm workspaces.
-
-3. **Configure environment variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   Edit `.env.local` and add your Gemini API key:
-   ```
-   GEMINI_API_KEY=your_api_key_here
-   ```
-
-4. **Run the development servers**
-
-   **Option A: Run both frontend & backend together**
-   ```bash
-   npm run dev:backend
-   npm run dev:frontend
-   # In separate terminals
-   ```
-
-   **Option B: Run backend and frontend separately**
-   ```bash
-   # Terminal 1: Backend (Express API)
-   cd backend
-   npm run dev
-   # Runs on http://localhost:3000
-
-   # Terminal 2: Frontend (React app)
-   cd frontend
-   npm run dev
-   # Runs on http://localhost:5173 (or next available port)
-   ```
-
-5. **Open your browser**
-   - Navigate to `http://localhost:5173` (frontend dev server)
-   - The app will connect to `http://localhost:3000` (backend API)
-
----
-
-## 📦 Building for Production
-
-### Build both frontend and backend
-
-```bash
-npm run build
-```
-
-This command:
-1. Builds React frontend with Vite → `frontend/dist/`
-2. Bundles backend with esbuild → `dist/server.js`
-
-### Start production server
-
-```bash
-npm run start
-```
-
-The backend will:
-- Serve the frontend static files from `frontend/dist/`
-- Run API routes on port 3000
-- Persist sessions to `backend/data/history.json`
-
----
-
-## 🛠️ Development Scripts
-
-### Root Workspace
-
-```bash
-npm run dev:backend       # Start backend dev server (tsx)
-npm run dev:frontend      # Start frontend dev server (vite)
-npm run dev               # Start backend only
-npm run build:backend     # Build backend for production
-npm run build:frontend    # Build frontend for production
-npm run build             # Build both (frontend then backend)
-npm run start             # Run production backend
-npm run preview           # Preview frontend production build
-npm run lint              # Run TypeScript check on frontend
-npm run clean             # Remove all dist directories
-```
-
-### Frontend Only (`cd frontend/`)
-
-```bash
-npm run dev               # Vite dev server with HMR
-npm run build             # Production build
-npm run preview           # Preview production build locally
-npm run lint              # TypeScript type checking
-```
-
-### Backend Only (`cd backend/`)
-
-```bash
-npm run dev               # tsx watch mode (live reload)
-npm run build             # esbuild production bundle
-npm run start             # Run compiled dist/server.js
+5. History
+   User can review, revisit, or delete past sessions at any time
 ```
 
 ---
 
-## 📋 Component Overview
+## API Reference
 
-### Frontend Components
+Base URL (production): `https://ai-interview-coach-backend-nfu8.onrender.com`
 
-- **Header.tsx**: Navigation and branding
-- **SetupView.tsx**: Role input and PDF resume upload interface
-- **InterviewView.tsx**: Q&A interface with real-time feedback
-- **SummaryView.tsx**: Session results, average score, and performance analysis
-- **HistoryView.tsx**: Browse, filter, and delete past interview sessions
-- **PrepTipsModal.tsx**: Interview preparation tips and best practices
+| Endpoint | Method | Description | Request Body |
+|---|---|---|---|
+| `/health` | GET | Health check (used for uptime monitoring) | — |
+| `/api/parse-pdf` | POST | Extracts text from an uploaded resume PDF | `{ pdfBase64 }` |
+| `/api/generate-questions` | POST | Generates tailored interview questions | `{ role, resume }` |
+| `/api/score-answer` | POST | Scores and critiques a candidate's answer | `{ question, type, answer, role }` |
+| `/api/save-session` | POST | Persists a completed interview session | `{ role, resumeSnippet, avgScore, results }` |
+| `/api/history` | GET | Retrieves all saved sessions | — |
+| `/api/history/:id` | DELETE | Deletes a specific session | — |
+| `/api/history` | DELETE | Clears all session history | — |
 
-### State Management
+#### Example — Generate Questions
 
-The app uses React's `useState` and `useEffect` hooks for state management:
-- Interview flow state (current question, results)
-- Session history (loaded from backend)
-- Loading/error states
-- Modal visibility states
-
----
-
-## 🔐 Security & Privacy
-
-- Resume text is sent to Gemini API for question generation only
-- Session data is stored locally in `backend/data/history.json`
-- `.env.local` containing API keys is git-ignored (see `.gitignore`)
-- No third-party analytics or tracking
-- API communication uses standard HTTP/JSON
-
----
-
-## 🐛 Troubleshooting
-
-### "GEMINI_API_KEY is missing"
-- Ensure `.env.local` exists in the root directory
-- Verify your API key is correctly set
-- Restart both frontend and backend
-
-### "Cannot connect to backend"
-- Verify backend is running on `http://localhost:3000`
-- Check terminal for backend error messages
-- Ensure port 3000 is not in use by another process
-
-### "Resume parsing failed"
-- Ensure PDF is valid and readable
-- File size must be under 10MB
-- Try a different PDF file
-
-### Port already in use
-- Frontend tries ports 5173+ if occupied
-- Backend occupies port 3000
-- Kill process: `lsof -ti:3000 | xargs kill -9` (macOS/Linux)
-
----
-
-## 📚 API Response Examples
-
-### Generate Questions
+**Response**
 ```json
 {
   "questions": [
     {
       "id": "q1",
-      "question": "Tell me about a time you optimized React component performance.",
+      "question": "Tell me about a time you optimized a React component's performance.",
       "type": "behavioral",
       "focus": "React optimization",
-      "hint": "Discuss specific techniques like memoization, lazy loading."
+      "hint": "Discuss specific techniques such as memoization or lazy loading."
     }
   ]
 }
 ```
 
-### Score Answer
+#### Example — Score Answer
+
+**Response**
 ```json
 {
   "score": 8,
-  "feedback": "Great answer with specific examples...",
+  "feedback": "Strong, structured answer with specific examples.",
   "strengths": ["Clear structure", "Technical depth"],
-  "improvements": ["Could mention testing"],
-  "sampleAnswer": "Here's a concise example..."
+  "improvements": ["Could mention testing strategy"],
+  "sampleAnswer": "A concise, high-scoring example response..."
 }
 ```
 
 ---
 
-## 🎓 Interview Scoring Criteria
+## Getting Started Locally
 
-Answers are scored 1-10 across these dimensions:
-- **Clarity**: How well the answer is structured and articulated
-- **Relevance**: How directly the answer addresses the question
-- **Depth**: Technical or behavioral specificity
-- **Examples**: Real-world or concrete illustrations
-- **Growth Mindset**: Evidence of learning from experience
+### Prerequisites
+
+- Node.js 18+
+- npm 8+
+- A [Google Gemini API key](https://ai.google.dev/)
+
+### Setup
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd ai-interview-coach
+
+# 2. Install backend dependencies
+cd backend
+npm install
+cp .env.example .env      # add your GEMINI_API_KEY
+
+# 3. Install frontend dependencies
+cd ../frontend
+npm install
+```
+
+### Environment Variables
+
+**Backend (`backend/.env`)**
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+FRONTEND_URL=http://localhost:5173
+PORT=3000
+```
+
+**Frontend (`frontend/.env`)**
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### Run in Development
+
+```bash
+# Terminal 1 — Backend
+cd backend
+npm run dev        # http://localhost:3000
+
+# Terminal 2 — Frontend
+cd frontend
+npm run dev         # http://localhost:5173
+```
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
-The app can be deployed to any platform supporting Node.js:
+This project is deployed as two independent services rather than a single bundled server, which allows each layer to scale, redeploy, and fail independently.
 
-- **Vercel** (frontend only, backend API required)
-- **Heroku** (full-stack)
-- **AWS** (EC2, Lambda, or similar)
-- **Google Cloud Run** (containerized)
-- **DigitalOcean** (App Platform)
+### Frontend — Vercel
 
-For deployment:
-1. Build the app: `npm run build`
-2. Set `GEMINI_API_KEY` as an environment variable on your platform
-3. Run: `npm run start` (or point to `dist/server.js`)
+- Framework preset: **Vite**
+- Root directory: `frontend`
+- Environment variable: `VITE_API_URL` → set to the Render backend URL
+- Automatic deployments are triggered on every push to the main branch
+
+### Backend — Render
+
+- Root directory: `backend`
+- Build command: `npm install && npm run build`
+- Start command: `npm start`
+- Environment variables: `GEMINI_API_KEY`, `FRONTEND_URL` (must exactly match the deployed frontend origin, without a trailing slash)
+- Health check path: `/health`
+
+### Uptime Management — cron-job.org
+
+Render's free tier suspends services after a period of inactivity, introducing cold-start delays. A scheduled job on [cron-job.org](https://cron-job.org) pings the backend's `/health` endpoint at regular intervals to keep the service warm and reduce latency for real users.
 
 ---
 
-## 📝 License
+## Interview Scoring Criteria
 
-This project is built with Google AI Studio. See LICENSE for details.
+Each answer is evaluated by Gemini across the following dimensions, producing a single 1–10 composite score:
+
+- **Clarity** — structure and articulation of the response
+- **Relevance** — how directly the answer addresses the question
+- **Depth** — technical or behavioral specificity
+- **Examples** — use of concrete, real-world illustrations
+- **Growth Mindset** — evidence of reflection and learning
 
 ---
 
-## 🤝 Contributing
+## Security & Privacy
 
-Contributions are welcome! To contribute:
+- Resume content is transmitted only to the Gemini API for question generation and is not shared with any third party.
+- Session data is persisted server-side in JSON storage on the backend host.
+- API keys are managed exclusively via environment variables and are never committed to version control.
+- CORS is restricted to the deployed frontend origin.
+
+---
+
+## Troubleshooting
+
+**The app is slow to respond on first load**
+Render's free tier suspends the backend after inactivity. The first request after idle time may take up to a minute to receive a cold-start response; subsequent requests are fast.
+
+**`GEMINI_API_KEY is missing` error**
+Confirm the key is set correctly in the backend's environment variables on Render (or `.env` locally), and redeploy/restart the service.
+
+**CORS errors in the browser console**
+Verify that `FRONTEND_URL` on the backend exactly matches the deployed frontend URL, including protocol and excluding any trailing slash.
+
+**PDF parsing fails**
+Ensure the uploaded file is a valid, text-based PDF resume under 10MB. Scanned or image-based PDFs are supported via an OCR fallback but may take slightly longer to process.
+
+---
+
+## Roadmap
+
+- [ ] Persistent database storage (replacing JSON file storage)
+- [ ] User authentication and per-user session history
+- [ ] Voice-based answer input
+- [ ] Export session results as PDF
+
+---
+
+## License
+
+This project is distributed under the MIT License. See `LICENSE` for details.
+
+## Contributing
+
+Contributions are welcome.
+
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit changes: `git commit -m 'Add your feature'`
-4. Push to branch: `git push origin feature/your-feature`
+3. Commit your changes: `git commit -m "Add your feature"`
+4. Push the branch: `git push origin feature/your-feature`
 5. Open a Pull Request
 
 ---
 
-## 📞 Support
+<div align="center">
 
-For issues, questions, or feedback:
-- Open a GitHub Issue
-- Check existing issues for similar problems
-- Review the Troubleshooting section above
+**[Live Demo](https://ai-interview-coach-six-opal.vercel.app/)** · Built with Google Gemini AI, React, and Express
 
----
-
-**Built with ❤️ using Google Gemini AI**
+</div>
