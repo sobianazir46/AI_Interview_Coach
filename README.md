@@ -84,6 +84,8 @@ This project began as a prototype built in Google AI Studio. Since then, the fol
 ```
 ai-interview-coach/
 ├── frontend/                     # React SPA (deployed to Vercel)
+│   ├── public/
+│   │   └── favicon.svg
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Header.tsx
@@ -92,21 +94,30 @@ ai-interview-coach/
 │   │   │   ├── SummaryView.tsx       # Results & performance summary
 │   │   │   ├── HistoryView.tsx       # Past session browser
 │   │   │   └── PrepTipsModal.tsx     # Interview prep guidance
+│   │   ├── data/
+│   │   │   └── sampleResumes.ts      # Sample resume fixtures
 │   │   ├── App.tsx                   # Application state & routing logic
 │   │   ├── types.ts                  # Shared TypeScript interfaces
-│   │   └── main.tsx                  # Entry point
+│   │   ├── index.css                 # Global styles (Tailwind entry)
+│   │   ├── main.tsx                  # Entry point
+│   │   └── vite-env.d.ts
+│   ├── dist/                         # Production build output (generated)
+│   ├── index.html
 │   ├── package.json
-│   ├── vite.config.ts
-│   └── index.html
+│   ├── tsconfig.json
+│   └── vite.config.ts
 │
 ├── backend/                      # Express REST API (deployed to Render)
-│   ├── server.ts                     # API routes & business logic
 │   ├── data/
 │   │   └── history.json              # Session persistence store
+│   ├── dist/                         # Compiled production output (generated)
+│   ├── server.ts                     # API routes & business logic
 │   └── package.json
 │
 ├── .env.example                  # Environment variable template
 ├── .gitignore
+├── LICENSE
+├── metadata.json                 # AI Studio project metadata
 └── README.md
 ```
 
