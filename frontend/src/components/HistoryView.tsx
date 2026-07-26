@@ -59,7 +59,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">"
+        <div className="flex items-center gap-1.5 sm:gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">
           {history.length > 0 && (
             <button
               type="button"
