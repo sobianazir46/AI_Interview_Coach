@@ -9,41 +9,150 @@
 [![API](https://img.shields.io/badge/Live-Backend%20API-green?style=flat-square)](https://ai-interview-coach-backend-nfu8.onrender.com)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)]()
 
-[Live Demo](https://ai-interview-coach-six-opal.vercel.app/) · [Backend API](https://ai-interview-coach-backend-nfu8.onrender.com) · [Report an Issue](../../issues)
+[🚀 Live Demo](https://ai-interview-coach-six-opal.vercel.app/) · [Backend API](https://ai-interview-coach-backend-nfu8.onrender.com) · [Report an Issue](../../issues)
 
 </div>
 
 ---
 
-## Overview
+## 📋 Overview
 
-**AI Interview Coach** is a full-stack web application that helps candidates prepare for job interviews using generative AI. Users upload their resume and specify a target role; the system generates tailored interview questions, evaluates spoken or written answers in real time, and tracks performance across sessions.
+**AI Interview Coach** is a free, full-stack web application designed to help job candidates overcome interview anxiety through realistic, personalized practice. 
 
-The application was originally prototyped in **Google AI Studio** and has since been substantially re-engineered for production use: the codebase was restructured into an independent, deployable frontend/backend architecture, the UI was rebuilt to be fully mobile-responsive, and the application was deployed to a live, publicly accessible environment with automated uptime management.
+### The Problem It Solves
+Job interviews are high-stress situations where candidates often underperform due to lack of practice and feedback. Traditional interview coaching is expensive, time-consuming, and unavailable 24/7. Most candidates interview 5-10 times before mastering their pitch and responses.
+
+**Who it's for:** Software engineers, data scientists, product managers, and tech professionals preparing for job interviews who need instant, constructive AI feedback without paying hundreds of dollars for coaching services.
+
+### How It Works
+1. **Upload your resume** (PDF or text) — the system parses it to understand your experience
+2. **Select a target job role** — e.g., "Full Stack Engineer", "Data Scientist", "Product Manager"
+3. **Get 5 AI-generated interview questions** — tailored specifically to your resume and the target role
+4. **Answer each question** — submit written responses
+5. **Receive instant AI feedback** — get a score (1–10), specific strengths, actionable improvements, and a model answer to learn from
+6. **Track your progress** — review all past sessions and watch your average score improve over time
 
 ### Live Deployment
 
 | Service | Platform | URL |
 |---|---|---|
-| Frontend (React SPA) | Vercel | https://ai-interview-coach-six-opal.vercel.app/ |
-| Backend (REST API) | Render | https://ai-interview-coach-backend-nfu8.onrender.com |
+| **Frontend (React SPA)** | Vercel | [https://ai-interview-coach-six-opal.vercel.app/](https://ai-interview-coach-six-opal.vercel.app/) |
+| **Backend (REST API)** | Render | [https://ai-interview-coach-backend-nfu8.onrender.com](https://ai-interview-coach-backend-nfu8.onrender.com) |
 
 > **Note:** The backend runs on Render's free tier, which suspends inactive services. A scheduled [cron-job.org](https://cron-job.org) health-check ping keeps the API warm and minimizes cold-start latency for end users.
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-- **Resume-Aware Question Generation** — Parses uploaded PDF resumes and generates role-specific behavioral and technical interview questions using the Gemini API.
-- **Real-Time Answer Evaluation** — Each response is scored (1–10) with structured, constructive feedback, including strengths, areas for improvement, and a model sample answer.
-- **Session History & Analytics** — All practice sessions are persisted and browsable, with average scores and timestamps for tracking progress over time.
-- **Interview Preparation Guidance** — An in-app tips modal offers best practices for interview readiness.
-- **Fully Responsive Interface** — Rebuilt from the original AI Studio prototype to work seamlessly across desktop, tablet, and mobile viewports.
-- **Independent, Production-Ready Deployment** — Frontend and backend are decoupled, containerizable, and independently deployable services.
+✅ **Resume-Aware Question Generation** — Parses uploaded PDF resumes (including scanned/image PDFs with OCR fallback) and generates role-specific behavioral and technical interview questions using the Gemini API.
+
+✅ **Real-Time Answer Evaluation** — Each response is scored (1–10) with structured, constructive feedback including:
+   - Key strengths observed in the answer
+   - Actionable areas for improvement  
+   - A model sample answer demonstrating a top-tier response
+
+✅ **Session History & Performance Analytics** — All practice sessions are persisted with:
+   - Average overall score
+   - Behavioral vs. Technical question breakdown
+   - Timestamp and question count for each session
+   - Searchable history browser
+
+✅ **Interview Preparation Guidance** — In-app tips modal with best practices for interview readiness
+
+✅ **Fully Responsive Interface** — Works seamlessly across desktop, tablet, and mobile viewports
+
+✅ **Independent, Production-Ready Deployment** — Frontend and backend are decoupled and independently deployable
 
 ---
 
-## Project Background
+## 📸 Screenshots
+
+![Screenshot 1](./screenshots/1.png)
+![Screenshot 2](./screenshots/2.png)
+![Screenshot 3](./screenshots/3.png)
+![Screenshot 4](./screenshots/4.png)
+![Screenshot 5](./screenshots/5.png)
+![Screenshot 6](./screenshots/6.png)
+![Screenshot 7](./screenshots/7.png)
+
+---
+
+## 🤖 AI Feature Explanation
+
+### Interview Question Generation
+
+**AI Model:** Google Gemini 3.6 Flash
+
+**System Instruction:**
+```
+"You are a world-class senior technical recruiter and hiring manager conducting a realistic job interview."
+```
+
+**How It Works:**
+- Analyzes the candidate's uploaded resume and target job role
+- Generates exactly 5 interview questions tailored to the candidate's experience level and the role requirements
+- Produces a balanced mix:
+  - **Behavioral questions** (3 questions): Test soft skills like communication, conflict resolution, leadership, teamwork
+  - **Technical questions** (2 questions): Test domain-specific knowledge relevant to the resume and role
+
+**Output Schema** (JSON):
+```json
+[
+  {
+    "id": "q1",
+    "question": "Full interview question text",
+    "type": "behavioral | technical",
+    "focus": "Competency being tested (e.g., 'React State Management')",
+    "hint": "STAR method tip or guidance for structuring a strong answer"
+  },
+  ...
+]
+```
+
+### Answer Scoring & Feedback
+
+**AI Model:** Google Gemini 3.6 Flash
+
+**System Instruction:**
+```
+"You evaluate candidate interview answers constructively and fairly."
+```
+
+**Evaluation Dimensions:**
+- **Clarity** — Is the response well-structured and easy to follow?
+- **Relevance** — How directly does it address the question asked?
+- **Depth** — Does it demonstrate technical or behavioral specificity?
+- **Examples** — Are there concrete, real-world illustrations or proof points?
+- **Growth Mindset** — Does it show reflection, learning, and continuous improvement?
+
+**Output Schema** (JSON):
+```json
+{
+  "score": 7,
+  "feedback": "2-3 sentences of constructive feedback highlighting strengths and areas to improve",
+  "strengths": [
+    "Mentioned relevant technologies",
+    "Provided real-world context"
+  ],
+  "improvements": [
+    "Detail token security mechanisms (HttpOnly cookies, XSS prevention)",
+    "Explain real-time update handling (Socket.io or WebSockets)"
+  ],
+  "sampleAnswer": "A high-scoring exemplar response demonstrating best-in-class interviewing..."
+}
+```
+
+**Scoring Logic:**
+- **9–10:** Outstanding — comprehensive, specific, demonstrates mastery, includes concrete examples
+- **7–8:** Strong — clear response with good depth, minor gaps in detail
+- **5–6:** Adequate — addresses the question but lacks depth or specificity
+- **3–4:** Below Average — misses key points, vague or incomplete
+- **1–2:** Poor — off-topic, uninformed, or minimal effort
+
+---
+
+## 📚 Project Background
 
 This project began as a prototype built in Google AI Studio. Since then, the following engineering work has been completed independently:
 
@@ -56,28 +165,59 @@ This project began as a prototype built in Google AI Studio. Since then, the fol
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
-### Tech Stack
+### Tech Stack & Tools
 
-**Frontend**
-- React 19 + TypeScript
-- Vite (build tooling & dev server)
-- Tailwind CSS (responsive styling)
-- Lucide React (icon system)
-- Motion (animations)
+**🤖 AI & ML**
+- **Google Gemini API** (gemini-3.6-flash model)
+  - Interview question generation with structured JSON responses
+  - Real-time answer evaluation and scoring
+  - OCR text extraction from scanned/image-based PDFs
 
-**Backend**
-- Node.js (ES Modules) + Express.js
-- Google Gemini API (question generation & answer scoring)
-- PDF text extraction: `unpdf`, `pdf-parse` (with OCR fallback via Gemini for scanned documents)
-- JSON file-based session persistence
+**Frontend (React SPA)**
+- **React 19** — UI components and state management
+- **TypeScript** — Type-safe code
+- **Vite 6** — Lightning-fast build tooling and dev server
+- **Tailwind CSS 4** — Utility-first responsive styling
+- **Lucide React** — Beautiful, consistent icon system
+- **Motion** — Smooth animations and transitions
 
-**Infrastructure & DevOps**
-- Vercel (frontend hosting & CI/CD)
-- Render (backend hosting)
-- cron-job.org (scheduled backend keep-alive)
-- Git-based deployment pipelines on both platforms
+**Backend (Node.js REST API)**
+- **Node.js (ES Modules)** — JavaScript runtime
+- **Express.js 4** — Web framework and routing
+- **CORS** — Cross-origin request handling
+- **unpdf** (PDF.js) — Modern PDF text extraction for Node.js
+- **pdf-parse** — Fallback PDF parsing library
+- **pdf2json** — Additional PDF parsing capability
+- **pdf-lib** — PDF creation and manipulation utilities
+- **dotenv** — Environment variable management
+
+**Database & Storage**
+- **JSON file-based persistence** — Session history stored as `history.json` on backend
+- *Note: Currently file-based; future roadmap includes PostgreSQL/MongoDB migration*
+
+**Cloud Hosting & DevOps**
+- **Vercel** — Frontend hosting with automatic CI/CD on Git push
+  - Handles SPA routing, static asset optimization
+  - Global CDN for fast content delivery
+  - Environment variables for `VITE_API_URL`
+
+- **Render.com** — Backend REST API hosting
+  - Docker-compatible Node.js deployment
+  - Free tier with auto-suspend on inactivity
+  - Health check endpoint: `/health`
+
+- **cron-job.org** — Scheduled uptime pinging
+  - Pings backend `/health` endpoint every 5 minutes
+  - Keeps service warm and ready for user requests
+  - Reduces cold-start latency on free tier
+
+**Version Control & Deployment**
+- **Git** — Distributed version control
+- **GitHub** — Repository hosting with automated deployments
+  - Vercel deployment on `main` push
+  - Render deployment on Git push
 
 ### Project Structure
 

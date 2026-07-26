@@ -286,7 +286,7 @@ export const SetupView: React.FC<SetupViewProps> = ({
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div className="flex-1 text-xs text-emerald-800">
                     <p className="font-semibold text-sm text-emerald-900">
-                      Uploaded & Parsed: {pdfFileName}
+                      Uploaded: {pdfFileName}
                     </p>
                     <p className="mt-1 text-slate-600 line-clamp-2 italic">
                       "{resumeText.substring(0, 180)}..."
